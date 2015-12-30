@@ -3,6 +3,7 @@ package es.sandbox.spikes.java8.lambda;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,31 +17,28 @@ public class LambdaSpecs {
 
     private static final String[] ARRAY_OF_STRINGS = new String[]{"a", "b", "c"};
 
-    private StringBuilder result;
+    private List<String> result;
 
     @Before
     public void setup() {
-        this.result = new StringBuilder();
+        this.result = new ArrayList<>();
     }
 
-    private void assertThatTheResultIs(String expected) {
-        assertThat(this.result.toString()).isEqualTo(expected);
-    }
 
     @Test
     public void the_arrow_is_the_body_separator() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach((String e) -> this.result.append(e));
+                .forEach((String e) -> this.result.add(e));
 
-        assertThatTheResultIs("abc");
+        assertThat(this.result).containsExactly("a", "b", "c");
     }
 
     @Test
     public void the_argument_type_can_be_inferred() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach(e -> this.result.append(e));
+                .forEach(e -> this.result.add(e));
 
-        assertThatTheResultIs("abc");
+        assertThat(this.result).containsExactly("a", "b", "c");
     }
 
     @Test
@@ -48,20 +46,20 @@ public class LambdaSpecs {
         Arrays.asList(ARRAY_OF_STRINGS)
                 .forEach(e -> {
                     final String upper = e.toUpperCase();
-                    this.result.append(upper);
+                    this.result.add(upper);
                 });
 
-        assertThatTheResultIs("ABC");
+        assertThat(this.result).containsExactly("A", "B", "C");
     }
 
     @Test
     public void it_may_reference_to_local_variables() {
-        final String separator = ",";
+        final String addition = "+";
 
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach(e -> this.result.append(e).append(separator));
+                .forEach(e -> this.result.add(e + addition));
 
-        assertThatTheResultIs("a,b,c,");
+        assertThat(this.result).containsExactly("a+", "b+", "c+");
     }
 
     @Test
