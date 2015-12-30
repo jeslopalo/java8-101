@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static es.sandbox.spikes.java8.InvocationSpy.sharedSpy;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -28,17 +29,17 @@ public class LambdaSpecs {
     @Test
     public void the_arrow_is_the_body_separator() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach((String e) -> this.result.add(e));
+                .forEach((String e) -> sharedSpy().invocation());
 
-        assertThat(this.result).containsExactly("a", "b", "c");
+        assertThat(sharedSpy().invoked()).isTrue();
     }
 
     @Test
     public void the_argument_type_can_be_inferred() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach(e -> this.result.add(e));
+                .forEach(e -> sharedSpy().invocation());
 
-        assertThat(this.result).containsExactly("a", "b", "c");
+        assertThat(sharedSpy().invoked()).isTrue();
     }
 
     @Test
