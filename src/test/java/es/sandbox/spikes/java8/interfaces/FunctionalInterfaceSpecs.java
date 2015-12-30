@@ -4,6 +4,7 @@ import es.sandbox.spikes.java8.InvocationSpy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.call;
 import static es.sandbox.spikes.java8.InvocationSpy.spy;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,10 +15,6 @@ public class FunctionalInterfaceSpecs {
 
     private InvocationSpy spy;
 
-    private static final void callFunctionalInterface(SimpleFunctionalInterface functionalInterface) {
-        functionalInterface.doWork();
-    }
-
     @Before
     public void setup() {
         this.spy = spy();
@@ -25,7 +22,7 @@ public class FunctionalInterfaceSpecs {
 
     @Test
     public void has_one_callable_method() {
-        callFunctionalInterface(() -> this.spy.invocation());
+        call(() -> this.spy.invocation());
 
         assertThat(this.spy.invoked()).isTrue();
     }
