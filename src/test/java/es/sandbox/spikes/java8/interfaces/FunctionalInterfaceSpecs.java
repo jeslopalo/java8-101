@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 
-import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.call;
+import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.callExtendedFunctionalInterface;
+import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.callSimpleFunctionalInterface;
 import static es.sandbox.spikes.java8.InvocationSpy.spy;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +32,14 @@ public class FunctionalInterfaceSpecs {
 
     @Test
     public void when_is_used_in_a_lambda_it_invokes_the_unique_declared_method() {
-        call(() -> this.spy.invocation());
+        callSimpleFunctionalInterface(() -> this.spy.invocation());
+
+        assertThat(this.spy.invoked()).isTrue();
+    }
+
+    @Test
+    public void an_interface_that_extends_a_functional_interface_is_a_functional_interface() {
+        callExtendedFunctionalInterface(() -> this.spy.invocation());
 
         assertThat(this.spy.invoked()).isTrue();
     }
