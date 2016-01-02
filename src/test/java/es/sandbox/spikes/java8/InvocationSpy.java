@@ -5,31 +5,29 @@ package es.sandbox.spikes.java8;
  */
 public class InvocationSpy {
 
-    private static InvocationSpy instance = new InvocationSpy();
-
-    private boolean invoked;
-
-    public static final InvocationSpy sharedSpy() {
-        return instance;
-    }
+    private int times;
 
     public static final InvocationSpy spy() {
         return new InvocationSpy();
     }
 
     private InvocationSpy() {
-        this.invoked = false;
+        this.times = 0;
     }
 
     public void invocation() {
-        this.invoked = true;
+        this.times++;
     }
 
     public boolean invoked() {
-        return this.invoked;
+        return this.times > 0;
+    }
+
+    public boolean timesInvoked(int times) {
+        return this.times == times;
     }
 
     public void clear() {
-        this.invoked = false;
+        this.times = 0;
     }
 }

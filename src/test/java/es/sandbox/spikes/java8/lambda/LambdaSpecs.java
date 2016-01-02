@@ -1,5 +1,6 @@
 package es.sandbox.spikes.java8.lambda;
 
+import es.sandbox.spikes.java8.InvocationSpy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static es.sandbox.spikes.java8.InvocationSpy.sharedSpy;
+import static es.sandbox.spikes.java8.InvocationSpy.spy;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -18,10 +19,13 @@ public class LambdaSpecs {
 
     private static final String[] ARRAY_OF_STRINGS = new String[]{"a", "b", "c"};
 
+    private InvocationSpy spy;
     private List<String> result;
 
     @Before
     public void setup() {
+        this.spy = spy();
+
         this.result = new ArrayList<>();
     }
 
@@ -29,17 +33,17 @@ public class LambdaSpecs {
     @Test
     public void the_arrow_is_the_body_separator() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach((String e) -> sharedSpy().invocation());
+                .forEach((String e) -> this.spy.invocation());
 
-        assertThat(sharedSpy().invoked()).isTrue();
+        assertThat(this.spy.timesInvoked(3)).isTrue();
     }
 
     @Test
     public void the_argument_type_can_be_inferred() {
         Arrays.asList(ARRAY_OF_STRINGS)
-                .forEach(e -> sharedSpy().invocation());
+                .forEach(e -> this.spy.invocation());
 
-        assertThat(sharedSpy().invoked()).isTrue();
+        assertThat(this.spy.timesInvoked(3)).isTrue();
     }
 
     @Test
