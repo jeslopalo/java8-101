@@ -145,4 +145,6 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 
+### oh-my-zsh gradle plugin
+.gradletasknamecache
 
