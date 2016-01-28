@@ -6,9 +6,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 
-import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.callDefaultMethodsFunctionalInterface;
-import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.callExtendedFunctionalInterface;
-import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.callSimpleFunctionalInterface;
+import static es.sandbox.spikes.java8.FunctionalInterfaceCaller.*;
 import static es.sandbox.spikes.java8.InvocationSpy.spy;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,6 +46,13 @@ public class FunctionalInterfaceSpecs {
     @Test
     public void an_interface_with_default_methods_can_be_a_functional_interface() {
         callDefaultMethodsFunctionalInterface(() -> this.spy.invocation());
+
+        assertThat(this.spy.invoked()).isTrue();
+    }
+
+    @Test
+    public void an_interface_with_static_methods_can_be_a_functional_interface() {
+        callStaticMethodsFunctionalInterface(() -> this.spy.invocation());
 
         assertThat(this.spy.invoked()).isTrue();
     }
