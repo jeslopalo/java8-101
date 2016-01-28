@@ -2,6 +2,7 @@ package es.sandbox.spikes.java8;
 
 
 import es.sandbox.spikes.java8.interfaces.ExtendedFunctionalInterface;
+import es.sandbox.spikes.java8.interfaces.DefaultMethodsFunctionalInterface;
 import es.sandbox.spikes.java8.interfaces.SimpleFunctionalInterface;
 
 /**
@@ -14,6 +15,10 @@ public class FunctionalInterfaceCaller {
     }
 
     public static final void callExtendedFunctionalInterface(ExtendedFunctionalInterface functionalInterface) {
+        functionalInterface.doWork();
+    }
+
+    public static final void callDefaultMethodsFunctionalInterface(DefaultMethodsFunctionalInterface functionalInterface) {
         functionalInterface.doWork();
     }
 }
